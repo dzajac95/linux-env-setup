@@ -11,11 +11,11 @@
 - name: Clone neovim repository
   git:
     repo: "git@github.com:neovim/neovim.git"
-    dest: "{{ lookup('env', 'HOME')/neovim }}"
+    dest: "{{ lookup('env', 'HOME') }}/neovim"
     version: stable
     accept_hostkey: yes
 - name: Build release
-  shell: "cd ~/neovim && make CMAKE_BUILD_TYPE=Release"
+  shell: "cd {{ lookup('env', 'HOME') }}/neovim && make CMAKE_BUILD_TYPE=Release"
 - name: Install built neovim package
-  become: true
-  shell: "cd build && cpack -G DEB && dpkg -i nvim-linux64.deb"
+  become: yes
+  shell: "cd {{ lookup('env', 'HOME') }}/neovim/build && cpack -G DEB && dpkg -i nvim-linux64.deb"
