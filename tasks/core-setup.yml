@@ -1,0 +1,13 @@
+- name: Install core packages
+  become: true
+  apt:
+    pkg:
+      - git
+      - tmux
+      - make
+      - stow
+      - manpages-dev
+      - build-essential
+
+- name: Install rust
+  shell: "which rustup &> /dev/null || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"

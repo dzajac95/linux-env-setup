@@ -1,0 +1,12 @@
+- name: Set authorized key took from file
+  authorized_key:
+    user: "{{ username.stdout }}"
+    state: present
+    key: "{{ lookup('file', '{{ dest_key }}.pub') }}"
+- name: Grab dotfiles
+  git:
+    repo: "git@github.com:dzajac95/.dotfiles.git"
+    dest: "{{ lookup('env', 'HOME') }}/.dotfiles"
+    accept_hostkey: yes
+- name: Install dotfiles
+  shell: "cd {{ lookup('env', 'HOME') }}/.dotfiles && make"
