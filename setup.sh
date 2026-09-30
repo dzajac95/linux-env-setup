@@ -1,13 +1,21 @@
 #!/usr/bin/env bash
 
-sudo apt install python3-venv python3-pip
-
-if [[ ! -f .venv/bin/activate ]]; then
-    python3 -m venv .venv
+if ! [[ -f /etc/os-release ]]; then
+    echo "Could not detect system information: what kind of linux doesn't have /etc/os-release??"
+    exit 1
 fi
 
-source .venv/bin/activate
+. /etc/os-release
+case "$ID" in
+    ubuntu|debian)
+        ./debian.sh
+        ;;
+    ARCH)
+        echo "TODO: arch support"
+        ;;
+    *)
+        echo "Unsupported system type: $ID"
+        exit 1
+        ;;
+esac
 
-pip3 install ansible
-
-ansible-playbook main.yml --ask-vault-pass

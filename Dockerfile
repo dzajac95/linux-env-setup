@@ -2,10 +2,12 @@
 FROM ubuntu:focal AS base
 WORKDIR /usr/local/bin
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y software-properties-common curl git build-essential sudo && \
-    apt-get install -y python3 python3-pip python3-venv
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install -y --no-install-recommends \
+        software-properties-common \
+        sudo \
+    && rm -rf /var/lib/apt/lists/*
 
 FROM base AS primetime
 ARG TAGS
