@@ -48,13 +48,14 @@ if ! [[ -f /etc/os-release ]]; then
 fi
 
 . /etc/os-release
-case "$ID" in
-    ubuntu|debian)
+case "$ID_LIKE" in
+    debian|DEBIAN)
         echo "Setting up DEBIAN-like system"
         ./debian.sh
         ;;
-    ARCH)
-        echo "TODO: arch support"
+    arch|ARCH)
+        echo "Setting up ARCH-like system"
+        ./arch.sh
         ;;
     *)
         echo "Unsupported system type: $ID"
